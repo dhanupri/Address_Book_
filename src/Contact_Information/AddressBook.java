@@ -26,7 +26,7 @@ class AddressBook{
         }
     }
     //search method
-    public static Contact search_contact(String name, String name1){
+    public static Contact search_contact(Set<Contact> contacts, String name, String name1){
         for(Contact c:contact_Information){
             if(c.getfirstName().equals(name) &&  c.getlastName().equals(name1)){
                 return c;
