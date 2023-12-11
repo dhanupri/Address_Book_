@@ -1,7 +1,12 @@
 package Contact_Information;
-
 import java.util.Scanner;
-public class Contact {
+class Contact {
+    /*
+    create a Contacts in Address
+    Book with first and last names, address,
+    city, state, zip, phone number and
+    email...
+     */
     private String firstName;
     private String lastName;
     private String address;
@@ -10,18 +15,20 @@ public class Contact {
     private String zip;
     private String phone_number;
     private String email;
-    public Contact(String firstName,String lastName,String address,String city,String state,String zip,String phone_number,String email){
-        this.firstName=firstName;
-        this.lastName=lastName;
-        this.address=address;
-        this.city=city;
-        this.state=state;
-        this.zip=zip;
-        this.phone_number=phone_number;
-        this.email=email;
-    }public String getfirstName() {
+    public Contact(String firstName, String lastName, String address, String city, String state, String zip, String phone_number, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.phone_number = phone_number;
+        this.email = email;
+    }
+    public String getfirstName() {
         return firstName;
-    }public String getlastName(){
+    }
+    public String getlastName() {
         return lastName;
     }
     public void setFirstName(String firstName) {
@@ -61,27 +68,44 @@ public class Contact {
                 ", email='" + email + '\'' +
                 '}';
     }
-    public static void main(String[] args){
-        Scanner sc=new Scanner(System.in);
-        AddressBook addressBook=new AddressBook();
-        System.out.println("Welcome to Address Book Program in AddressBookMain");
-        System.out.println("Want to add new contact yes/no");
-        String res=sc.nextLine();
-        while(res.equals("yes")){
-            //create a contact
-            Contact contact=new Contact(sc.nextLine(), sc.nextLine(), sc.nextLine(),sc.nextLine(),sc.nextLine(),sc.nextLine(),sc.nextLine(),sc.nextLine() );
-            AddressBook.Contact_Information(contact);
-            System.out.println("Want to add new contact yes/no");
-            res=sc.nextLine();
-        }
-        if(res.equals("no")) {
-            AddressBook.display();
-        }
-        System.out.println("Enter the name of contact you want to edit:");
+    static Scanner sc=new Scanner(System.in);
+    /*
+    Ability to add a new
+    Contact to Address Book
+     */
+    public static void add_contact(){
+        System.out.println("FirstName:");
+        String FirstName= sc.nextLine();
+        System.out.println("LastName:");
+        String LastName= sc.nextLine();
+        System.out.println("Address:");
+        String Address = sc.nextLine();
+        System.out.println("City:");
+        String City = sc.nextLine();
+        System.out.println("State:");
+        String State = sc.nextLine();
+        System.out.println("ZIP:");
+        String ZIP = sc.nextLine();
+        System.out.println("Phone_number:");
+        String PhoneNumber = sc.nextLine();
+        System.out.println("Email:");
+        String Email = sc.nextLine();
+        Contact contact = new Contact(FirstName, LastName, Address, City, State, ZIP, PhoneNumber, Email);
+        AddressBook.Contact_Information(contact);
+    }
+    /*
+     edit
+    existing contact
+    person using their
+    name
+     */
+    public static void edit_contact()  {
+        System.out.println("Enter the First name of contact you want to edit:");
         String contact_name= sc.nextLine();
-        //edit a contact
-        Contact contact_existing=AddressBook.search_contact(contact_name);
-        if(contact_existing!=null){
+        System.out.println("Enter the last name you want to edit:");
+        String contact_last_name=sc.nextLine();
+        Contact contact_existing=AddressBook.search_contact(contact_name,contact_last_name);
+        if(contact_existing!=null) {
             System.out.println("Existing Contact Details:");
             System.out.println(contact_existing);
             System.out.println("Enter the new details:");
@@ -103,22 +127,50 @@ public class Contact {
             contact_existing.setEmail(sc.nextLine());
             System.out.println("Updated Contact Details");
             System.out.println(contact_existing);
+        }
+    }
+    /*
+    to delete a person using
+    person's name
+     */
+    public static void delete_contact(){
+        System.out.println("Enter the name of contact you want to delete:");
+        String contact_name= sc.nextLine();
+        String contact_last_name=sc.nextLine();
+        Contact contact_existing=AddressBook.search_contact(contact_name,contact_last_name);
+        AddressBook.contact_Information.remove(contact_existing);
+    }
+    public static void main(String[] args){
+        AddressBook addressBook=new AddressBook();
+        System.out.println("Welcome to Address Book Program in AddressBookMain");
+        System.out.println("1.Add Contact \n" +
+                "2.Edit Contact \n" +
+                "3.Delete Contact \n" +
+                "4.exit ");
+        int choice= sc.nextInt();
+        sc.nextLine();
+        while (choice>0 && choice <4){
+            switch (choice){
+                case 1:
+                    add_contact();
+                    break;
+                case 2:
+                    edit_contact();
+                    break;
+                case 3:
+                    delete_contact();
+                    break;
+                default:
+                    break;
+            }
             System.out.println("AddressBookMain:");
             AddressBook.display();
-        }
-        else{
-            System.out.println("Contact not found");
-        }
-        //delete a contact
-        System.out.println("Want to delete new contact yes/no");
-        String res_delete=sc.nextLine();
-        if(res_delete.equals("yes")){
-            System.out.println("Enter the name of contact you want to delete:");
-            String contact_name1= sc.nextLine();
-            Contact contact_existing1=AddressBook.search_contact(contact_name1);
-            AddressBook.contact_Information.remove(contact_existing1);
-            System.out.println("AddressBook after deletion:");
-            AddressBook.display();
+            System.out.println("1.Add Contact \n" +
+                    "2.Edit Contact \n" +
+                    "3.Delete Contact \n" +
+                    "4.exit ");
+            choice=sc.nextInt();
+            sc.nextLine();
         }
     }
 }
