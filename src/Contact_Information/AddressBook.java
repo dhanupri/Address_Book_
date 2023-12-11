@@ -1,9 +1,22 @@
 package Contact_Information;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.Map;
+import java.util.Set;
+
 class AddressBook{
-    //Arraylist to store multiple contact information
-    public static final ArrayList<Contact> contact_Information=new ArrayList<Contact>();
+    public static  Set<Contact> contact_Information=new HashSet<>();
+    //hash table to store multiple addressbook
+    public static Hashtable<String,Set<Contact>> Multiple_address_Book=new Hashtable<>();
+    public static Set Serach_Address(String s){
+        for(Map.Entry<String,Set<Contact>> map:Multiple_address_Book.entrySet()){
+            if(map.getKey().equals(s)){
+                return map.getValue();
+            }
+        }
+        return null;
+    }
     public static void Contact_Information(Contact contact){
         contact_Information.add(contact);
     }
@@ -12,12 +25,13 @@ class AddressBook{
             System.out.println(c);
         }
     }
-    // serach if the contact present or not
-    public static Contact search_contact(String name, String contact_last_name){
+    //search method
+    public static Contact search_contact(String name, String name1){
         for(Contact c:contact_Information){
-            if(c.getfirstName().equals(name) || c.getlastName().equals(name)){
+            if(c.getfirstName().equals(name) &&  c.getlastName().equals(name1)){
                 return c;
             }
+
         }
         return null;
     }
