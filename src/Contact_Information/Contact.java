@@ -1,6 +1,5 @@
 package Contact_Information;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 public class Contact {
     private String firstName;
@@ -62,7 +61,6 @@ public class Contact {
                 ", email='" + email + '\'' +
                 '}';
     }
-
     public static void main(String[] args){
         Scanner sc=new Scanner(System.in);
         AddressBook addressBook=new AddressBook();
@@ -110,6 +108,17 @@ public class Contact {
         }
         else{
             System.out.println("Contact not found");
+        }
+        //delete a contact
+        System.out.println("Want to delete new contact yes/no");
+        String res_delete=sc.nextLine();
+        if(res_delete.equals("yes")){
+            System.out.println("Enter the name of contact you want to delete:");
+            String contact_name1= sc.nextLine();
+            Contact contact_existing1=AddressBook.search_contact(contact_name1);
+            AddressBook.contact_Information.remove(contact_existing1);
+            System.out.println("AddressBook after deletion:");
+            AddressBook.display();
         }
     }
 }
