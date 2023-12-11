@@ -1,3 +1,4 @@
+package Contact_Information;
 import java.util.Scanner;
 public class Contact {
     private String firstName;
@@ -18,8 +19,6 @@ public class Contact {
         this.phone_number=phone_number;
         this.email=email;
     }
-
-
     @Override
     public String toString() {
         return "Contact{" +
@@ -41,4 +40,3 @@ public class Contact {
         System.out.println(contact);
     }
 }
-
