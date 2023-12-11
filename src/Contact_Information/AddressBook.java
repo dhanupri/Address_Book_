@@ -12,4 +12,13 @@ class AddressBook{
             System.out.println(c);
         }
     }
+    // serach if the contact present or not
+    public static Contact search_contact(String name){
+        for(Contact c:contact_Information){
+            if(c.getfirstName().equals(name) || c.getlastName().equals(name)){
+                return c;
+            }
+        }
+        return null;
+    }
 }
