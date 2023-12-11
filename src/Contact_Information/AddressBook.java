@@ -1,9 +1,7 @@
 package Contact_Information;
 
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 class AddressBook{
     public static  Set<Contact> contact_Information=new HashSet<>();
@@ -34,5 +32,15 @@ class AddressBook{
 
         }
         return null;
+    }
+    //view Persons
+    //by City or State
+    public static List<List<Contact>> searchPersonInCityOrState(String search_city_or_state) {
+        List<List<Contact>> search_result = new LinkedList<>();
+        for(Map.Entry<String,Set<Contact>> map : Multiple_address_Book.entrySet()){
+            search_result.add(map.getValue().stream()
+                    .filter(person -> person.getCity().equalsIgnoreCase(search_city_or_state) || person.getState().equalsIgnoreCase(search_city_or_state)).collect(Collectors.toList()));
+        }
+        return search_result;
     }
 }

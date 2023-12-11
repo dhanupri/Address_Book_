@@ -33,6 +33,15 @@ class Contact {
     public String getlastName() {
         return lastName;
     }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -207,6 +216,16 @@ class Contact {
                     break;
             }
         }
+        System.out.println("Search contact by city or state");
+        //view Persons
+        //by City or State
+        List<List<Contact>> search_result = AddressBook.searchPersonInCityOrState(sc.nextLine());
+        for(List list : search_result){
+            for(Object c: list){
+                System.out.println(c.toString());
+            }
+        }
     }
-    
+
+
 }
