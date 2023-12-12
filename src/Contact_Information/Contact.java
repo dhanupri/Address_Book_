@@ -117,7 +117,6 @@ class Contact {
         }
         else{
             System.out.println("Name already exist .");
-
         }
     }
     /*
@@ -213,6 +212,7 @@ class Contact {
                     break;
             }
         }
+        AddressBook.sort_by_Name();//sort by name
         System.out.println("Search contact by city or state");
         System.out.println("Enter city to view");
         String city = sc.nextLine();

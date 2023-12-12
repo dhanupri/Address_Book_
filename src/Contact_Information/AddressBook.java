@@ -50,6 +50,15 @@ class AddressBook{
         return stateDictionary.entrySet().stream()
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> (long) e.getValue().size()));
     }
+    //sort contact by name
+    public static void sort_by_Name(){
+        Multiple_address_Book.entrySet().stream().forEach(contact_list ->{
+            List<Contact> person=contact_list.getValue().stream()
+                    .sorted((contact1,contact2)-> contact1.getfirstName().compareTo(contact2.getfirstName()))
+                    .collect(Collectors.toList());
+            person.forEach(System.out::println);
+        });
+    }
     public static List<List<Contact>> searchPersonInCityOrState(String search_city_or_state) {
         List<List<Contact>> search_result = new LinkedList<>();
         for(Map.Entry<String,Set<Contact>> map : Multiple_address_Book.entrySet()){
