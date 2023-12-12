@@ -1,4 +1,5 @@
 package Contact_Information;
+import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 class Contact {
@@ -7,7 +8,7 @@ class Contact {
     Book with first and last names, address,
     city, state, zip, phone number and
     email...
- */
+*/
     private String firstName;
     private String lastName;
     private String address;
@@ -53,11 +54,11 @@ class Contact {
     public void setState(String state) {
         this.state = state;
     }
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
     public String getZip() {
         return zip;
+    }
+    public void setZip(String zip) {
+        this.zip = zip;
     }
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
@@ -90,7 +91,7 @@ class Contact {
     }
     static Scanner sc=new Scanner(System.in);
     /*
-   to add a new
+     add a new
     Contact to Address Book
      */
     public static void add_contact(Set <Contact> contacts){
@@ -98,7 +99,6 @@ class Contact {
         String FirstName= sc.nextLine();
         System.out.println("LastName:");
         String LastName= sc.nextLine();
-        //streams to search
         boolean unique = contacts.stream().noneMatch(p -> (p.getfirstName().equals(FirstName)) && p.getlastName().equals(LastName));
         if(unique) {
             System.out.println("Address:");
@@ -123,7 +123,7 @@ class Contact {
         }
     }
     /*
-     edit existing contact
+    edit existing contact
     person using their name
      */
     public static void edit_contact(Set<Contact> contacts)  {
@@ -174,34 +174,49 @@ class Contact {
     to delete a person using
     person's name
      */
-    public static void delete_contact(Set<Contact> contacts
-    ){
+    public static void delete_contact(Set<Contact> contacts){
         System.out.println("Enter the name of contact you want to delete:");
         String contact_name= sc.nextLine();
         String contact_last_name=sc.nextLine();
         Contact contact_existing=AddressBook.search_contact(contacts,contact_name,contact_last_name);
         AddressBook.contact_Information.remove(contact_existing);
-
     }
     public static void main(String[] args){
         AddressBook addressBook=new AddressBook();
         System.out.println("Welcome to Address Book Program in AddressBookMain");
+        String filename="E:\\Address_Book\\src\\Contact_Information\\input.txt";
+        try(BufferedReader inputStream=new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line=inputStream.readLine())!=null){
+                String[] arr=line.split(",");
+                Set<Contact> address_book = AddressBook.Serach_Address(arr[0]);
+                if (address_book == null) {
+                    address_book = new HashSet<>();
+                    AddressBook.Multiple_address_Book.put(arr[0], address_book);
+                }
+                Contact contact = new Contact(arr[1], arr[2], arr[3],arr[4], arr[5], arr[6], arr[7], arr[8]);
+                address_book.add(contact);
+                AddressBook.addCity_State(contact);
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         int choice = 1;
-        while (choice>0 && choice <4){
+        while (choice > 0 && choice < 4) {
             System.out.println("Enter name of address book you need to update");
-            String address_book_name=sc.nextLine();
-            Set<Contact> address_book=AddressBook.Serach_Address(address_book_name);
-            if(address_book==null){
-                address_book=new HashSet<>() ;
-                AddressBook.Multiple_address_Book.put(address_book_name,address_book);
+            String address_book_name = sc.nextLine();
+            Set<Contact> address_book = AddressBook.Serach_Address(address_book_name);
+            if (address_book == null) {
+                address_book = new HashSet<>();
+                AddressBook.Multiple_address_Book.put(address_book_name, address_book);
             }
             System.out.println("1.Add Contact \n" +
                     "2.Edit Contact \n" +
                     "3.Delete Contact \n" +
                     "4.exit ");
-            choice= sc.nextInt();
+            choice = sc.nextInt();
             sc.nextLine();
-            switch (choice){
+            switch (choice) {
                 case 1:
                     add_contact(address_book);
                     break;
@@ -215,8 +230,7 @@ class Contact {
                     break;
             }
         }
-        AddressBook.sort_by_Name();//sort by name
-        //sort based on entities
+        AddressBook.sort_by_Name();
         int n=1;
         while (n!=5) {
             System.out.println("1.sort by city" +
@@ -257,5 +271,19 @@ class Contact {
         System.out.println("Contact count by city: " + contactCountByCity);
         Map<String, Long> contactCountByState = AddressBook.getContactCountByState();
         System.out.println("Contact count by state: " + contactCountByState);
+        //write the file
+        filename="E:\\Address_Book\\src\\Contact_Information\\output.txt";
+        try(BufferedWriter writer=new BufferedWriter(new FileWriter(filename))) {
+            for (Map.Entry<String, Set<Contact>> entry :AddressBook.Multiple_address_Book.entrySet()) {
+                writer.write("Address Book Name " + entry.getKey());
+                writer.newLine();
+                for (Contact contact : entry.getValue()) {
+                    writer.write(contact.toString());
+                    writer.newLine();
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

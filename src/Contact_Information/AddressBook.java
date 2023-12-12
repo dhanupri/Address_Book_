@@ -87,12 +87,4 @@ class AddressBook{
             person.forEach(System.out::println);
         });
     }
-    public static List<List<Contact>> searchPersonInCityOrState(String search_city_or_state) {
-        List<List<Contact>> search_result = new LinkedList<>();
-        for(Map.Entry<String,Set<Contact>> map : Multiple_address_Book.entrySet()){
-            search_result.add(map.getValue().stream()
-                    .filter(person -> person.getCity().equalsIgnoreCase(search_city_or_state) || person.getState().equalsIgnoreCase(search_city_or_state)).collect(Collectors.toList()));
-        }
-        return search_result;
-    }
 }
