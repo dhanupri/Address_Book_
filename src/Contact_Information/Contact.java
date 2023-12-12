@@ -1,14 +1,13 @@
 package Contact_Information;
-
 import java.util.*;
-
+import java.util.stream.Collectors;
 class Contact {
     /*
     create a Contacts in Address
     Book with first and last names, address,
     city, state, zip, phone number and
     email...
-     */
+ */
     private String firstName;
     private String lastName;
     private String address;
@@ -33,15 +32,12 @@ class Contact {
     public String getlastName() {
         return lastName;
     }
-
     public String getCity() {
         return city;
     }
-
     public String getState() {
         return state;
     }
-
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -70,14 +66,11 @@ class Contact {
         if(this==obj){
             return true;
         }
-
         if(obj==null || getClass()!=obj.getClass()){
             return false;
         }
-
         Contact contact=(Contact) obj;
         return (firstName.equals(contact.firstName) )&&(lastName.equals(contact.lastName));
-
     }
     @Override
     public String toString() {
@@ -94,7 +87,7 @@ class Contact {
     }
     static Scanner sc=new Scanner(System.in);
     /*
-    Ability to add a new
+   to add a new
     Contact to Address Book
      */
     public static void add_contact(Set <Contact> contacts){
@@ -102,6 +95,7 @@ class Contact {
         String FirstName= sc.nextLine();
         System.out.println("LastName:");
         String LastName= sc.nextLine();
+        //streams to search
         boolean unique = contacts.stream().noneMatch(p -> (p.getfirstName().equals(FirstName)) && p.getlastName().equals(LastName));
         if(unique) {
             System.out.println("Address:");
@@ -118,17 +112,17 @@ class Contact {
             String Email = sc.nextLine();
             Contact contact = new Contact(FirstName, LastName, Address, City, State, ZIP, PhoneNumber, Email);
             contacts.add(contact);
+            AddressBook.addCity_State(contact);
             System.out.println("Added to address book");
         }
         else{
             System.out.println("Name already exist .");
+
         }
     }
     /*
-     edit
-    existing contact
-    person using their
-    name
+     edit existing contact
+    person using their name
      */
     public static void edit_contact(Set<Contact> contacts)  {
         System.out.println("Enter the First name of contact you want to edit:");
@@ -162,6 +156,7 @@ class Contact {
                     System.out.println("Email:");
                     contact_existing.setEmail(sc.nextLine());
                     System.out.println("Updated Contact Details");
+                    AddressBook.addCity_State(contact_existing);
                     System.out.println(contact_existing);
                     break;
                 } else {
@@ -178,11 +173,13 @@ class Contact {
     person's name
      */
     public static void delete_contact(Set<Contact> contacts
-    ){System.out.println("Enter the name of contact you want to delete:");
+    ){
+        System.out.println("Enter the name of contact you want to delete:");
         String contact_name= sc.nextLine();
         String contact_last_name=sc.nextLine();
         Contact contact_existing=AddressBook.search_contact(contacts,contact_name,contact_last_name);
         AddressBook.contact_Information.remove(contact_existing);
+
     }
     public static void main(String[] args){
         AddressBook addressBook=new AddressBook();
@@ -217,15 +214,15 @@ class Contact {
             }
         }
         System.out.println("Search contact by city or state");
-        //view Persons
-        //by City or State
-        List<List<Contact>> search_result = AddressBook.searchPersonInCityOrState(sc.nextLine());
-        for(List list : search_result){
-            for(Object c: list){
-                System.out.println(c.toString());
-            }
-        }
+        System.out.println("Enter city to view");
+        String city = sc.nextLine();
+        List<Contact> peopleInCity = AddressBook.getPersonsByCity(city);
+        System.out.println("People in"+city);
+        peopleInCity.forEach(person -> System.out.println(person.getfirstName() + " " + person.getlastName()));
+        System.out.println("Enter state to view");
+        String state = sc.nextLine();
+        List<Contact> peopleInState = AddressBook.getPersonsByState(state);
+        System.out.println("\nPeople in"+state);
+        peopleInState.forEach(person -> System.out.println(person.getfirstName() + " " + person.getlastName()));
     }
-
-
 }
