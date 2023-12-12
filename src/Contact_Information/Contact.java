@@ -56,6 +56,9 @@ class Contact {
     public void setZip(String zip) {
         this.zip = zip;
     }
+    public String getZip() {
+        return zip;
+    }
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
     }
@@ -213,6 +216,32 @@ class Contact {
             }
         }
         AddressBook.sort_by_Name();//sort by name
+        //sort based on entities
+        int n=1;
+        while (n!=5) {
+            System.out.println("1.sort by city" +
+                    "2.sort by state" +
+                    "3.sort by ZIP" +
+                    "4.sort by Name"+
+                    "5.exit");
+            n = sc.nextInt();
+            switch (n){
+                case 1:
+                    AddressBook.sort_by_City();
+                    break;
+                case 2:
+                    AddressBook.sort_by_State();
+                    break;
+                case 3:
+                    AddressBook.sort_by_Zip();
+                    break;
+                case 4:
+                    AddressBook.sort_by_Name();
+                    break;
+                default:
+                    break;
+            }
+        }
         System.out.println("Search contact by city or state");
         System.out.println("Enter city to view");
         String city = sc.nextLine();

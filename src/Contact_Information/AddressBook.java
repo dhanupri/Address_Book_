@@ -59,6 +59,34 @@ class AddressBook{
             person.forEach(System.out::println);
         });
     }
+    //sort by city
+    public static void sort_by_City(){
+        Multiple_address_Book.entrySet().stream().forEach(contact_list ->{
+
+            List<Contact> person=contact_list.getValue().stream()
+                    .sorted((contact1,contact2)-> contact1.getCity().compareTo(contact2.getCity()))
+                    .collect(Collectors.toList());
+            person.forEach(System.out::println);
+        });
+    }
+    //sort by state
+    public static void sort_by_State(){
+        Multiple_address_Book.entrySet().stream().forEach(contact_list ->{
+            List<Contact> person=contact_list.getValue().stream()
+                    .sorted((contact1,contact2)-> contact1.getState().compareTo(contact2.getState()))
+                    .collect(Collectors.toList());
+            person.forEach(System.out::println);
+        });
+    }
+    //sort by Zip
+    public static void sort_by_Zip(){
+        Multiple_address_Book.entrySet().stream().forEach(contact_list ->{
+            List<Contact> person=contact_list.getValue().stream()
+                    .sorted((contact1,contact2)-> contact1.getZip().compareTo(contact2.getZip()))
+                    .collect(Collectors.toList());
+            person.forEach(System.out::println);
+        });
+    }
     public static List<List<Contact>> searchPersonInCityOrState(String search_city_or_state) {
         List<List<Contact>> search_result = new LinkedList<>();
         for(Map.Entry<String,Set<Contact>> map : Multiple_address_Book.entrySet()){
