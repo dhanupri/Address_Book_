@@ -2,7 +2,6 @@ package Contact_Information;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
 class AddressBook{
     public static  Set<Contact> contact_Information=new HashSet<>();
     //hash table to store multiple addressbook
@@ -40,6 +39,16 @@ class AddressBook{
             }
         }
         return null;
+    }
+    //number of contact persons i.e count by city
+    public static Map<String, Long> getContactCountByCity() {
+        return cityDictionary.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (long) e.getValue().size()));
+    }
+    //number of contact persons i.e count by state
+    public static Map<String, Long> getContactCountByState() {
+        return stateDictionary.entrySet().stream()
+                .collect(Collectors.toMap(Map.Entry::getKey, e -> (long) e.getValue().size()));
     }
     public static List<List<Contact>> searchPersonInCityOrState(String search_city_or_state) {
         List<List<Contact>> search_result = new LinkedList<>();

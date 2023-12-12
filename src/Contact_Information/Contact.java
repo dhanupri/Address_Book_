@@ -224,5 +224,9 @@ class Contact {
         List<Contact> peopleInState = AddressBook.getPersonsByState(state);
         System.out.println("\nPeople in"+state);
         peopleInState.forEach(person -> System.out.println(person.getfirstName() + " " + person.getlastName()));
+        Map<String, Long> contactCountByCity = AddressBook.getContactCountByCity();
+        System.out.println("Contact count by city: " + contactCountByCity);
+        Map<String, Long> contactCountByState = AddressBook.getContactCountByState();
+        System.out.println("Contact count by state: " + contactCountByState);
     }
 }
