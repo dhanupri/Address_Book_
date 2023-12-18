@@ -17,6 +17,19 @@ class Contact {
     private String zip;
     private String phone_number;
     private String email;
+    public List<Contact> contacts;
+    public Contact(List<Contact> contacts){
+        this.contacts=contacts;
+    }
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
     public Contact(String firstName, String lastName, String address, String city, String state, String zip, String phone_number, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -27,6 +40,19 @@ class Contact {
         this.phone_number = phone_number;
         this.email = email;
     }
+
+    public Contact() {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.phone_number = phone_number;
+        this.email = email;
+
+    }
+
     public String getfirstName() {
         return firstName;
     }
